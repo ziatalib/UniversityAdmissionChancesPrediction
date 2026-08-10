@@ -27,6 +27,7 @@ import streamlit as st
 # --------------------------------------------------------------------------
 
 DATA_PATH = "admission_data.csv"
+df = pd.read_csv("admission_data.csv")
 
 # The weighting formula used to calculate the student's aggregate.
 # This mirrors the common Pakistani engineering-admission style formula
