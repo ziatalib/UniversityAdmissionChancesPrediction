@@ -16,6 +16,7 @@ Libraries used:
 """
 
 import os
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,8 +27,10 @@ import streamlit as st
 # GLOBAL CONFIG
 # --------------------------------------------------------------------------
 
-DATA_PATH = "admission_data.csv"
-df = pd.read_csv("admission_data.csv")
+# Build the dataset path relative to this Python file.
+# This works both locally in VS Code and on Streamlit Community Cloud.
+BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = BASE_DIR / "admission_data.csv"
 
 # The weighting formula used to calculate the student's aggregate.
 # This mirrors the common Pakistani engineering-admission style formula
@@ -377,7 +380,10 @@ def main():
     df, report = load_and_clean_data(DATA_PATH)
 
     if report["missing_file"]:
-        st.error(f"Dataset not found at '{DATA_PATH}'. Please make sure the CSV file is in the project folder.")
+        st.error(
+            "Dataset not found. Make sure 'admission_data.csv' is uploaded "
+            "to the same GitHub repository folder as 'app.py'."
+        )
         st.stop()
 
     if report["missing_columns"]:
